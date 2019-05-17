@@ -1,5 +1,6 @@
 {
   "name": "WeathInfo",
+  "author": "Nikita Glukhi<nikita-glukhi@valor-software.com, nikitagluhkhi1999@gmail.com>",
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",

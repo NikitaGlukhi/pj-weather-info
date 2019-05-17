@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 const url = environment.url;
 
 @Injectable()
 export class AppService {
+
+  private weatherSubject = new BehaviorSubject([]);
 
   constructor(private http: HttpClient) {
   }
@@ -23,7 +25,11 @@ export class AppService {
     return throwError('Something bad happened; please try again later.');
   }
 
-  getCurrent(data: { lat: number, lng: number }) {
+  public insertToSubject(subject: any) {
+    this.weatherSubject.next(subject);
+  }
+
+  public getCurrent(data: { lat: number, lng: number }) {
     const options = data ?
       {params: new HttpParams().set('lat', data.lat.toString()).set('lng', data.lng.toString())} : {};
     return this.http.get(`${url}/current-position/weather-data`, options)
@@ -32,7 +38,7 @@ export class AppService {
       );
   }
 
-  getForecastData(data: { lat: number, lng: number }) {
+  public getForecastData(data: { lat: number, lng: number }) {
     const options = data ?
       {params: new HttpParams().set('lat', data.lat.toString()).set('lng', data.lng.toString())} : {};
     return this.http.get(`${url}/current-position/forecast-weather-data`, options)
@@ -41,17 +47,24 @@ export class AppService {
       );
   }
 
-  getForecast(): Observable<any> {
-    return this.http.get(`${url}/current-position/get-weather-by-city`).pipe(
-      catchError(this.handleError)
-    );
+  public getForecast() {
+    this.http.get(`${url}/current-position/get-weather-by-city`)
+      .subscribe((res: any) => {
+        this.weatherSubject.next(res);
+      }, err => {
+        console.log(err);
+      });
   }
 
-  addNewCity(city) {
+  public addNewCity(city) {
     return this.http.post(`${url}/api-city/add-city`, city)
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  get subject() {
+    return this.weatherSubject;
   }
 }
 

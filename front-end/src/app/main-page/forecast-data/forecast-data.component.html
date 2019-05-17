@@ -1,6 +1,6 @@
-<div *ngIf="weathers.length !== 0">
+<div *ngIf="(weatherData | async)?.length !== 0" style="margin-top: 70px">
   <div class="container">
-  <table class="table table-light table-bordered">
+  <table class="table table-light table-bordered table-position-1">
     <thead>
       <tr>
           <th>City</th>
@@ -16,9 +16,9 @@
           <th>Pressure</th>
       </tr>
     </thead>
-    <tbody *ngFor="let weatherinfo of weathers?.list">
+    <tbody *ngFor="let weatherinfo of (weatherData | async)?.result?.list">
       <tr>
-        <td>{{weathers?.city?.name}}, {{weathers?.city?.country}}</td>
+        <td>{{(weatherData | async)?.result?.city?.name}}, {{(weatherData | async)?.result?.city?.country}}</td>
         <td>{{weatherinfo?.dt_txt | date: 'MMMM dd'}}</td>
         <td>{{weatherinfo?.dt_txt | date: 'HH:mm'}}</td>
         <td><img src="http://openweathermap.org/img/w/{{weatherinfo?.weather[0].icon}}.png"></td>
