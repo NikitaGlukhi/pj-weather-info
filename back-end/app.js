@@ -50,4 +50,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(process.env.PORT || 3000, () => console.log('Server started successfully'));
+app.listen(process.env.PORT, () => console.log('Server started successfully'));
