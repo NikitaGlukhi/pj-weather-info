@@ -22,8 +22,8 @@ constructor(private router: Router, private route: ActivatedRoute, private addci
   onSubmit() {
     this.addcity.addNewCity(this.city)
       .subscribe((res: any) => {
-        document.forms['addCityForm'].reset();
         if (res.status === 200) {
+          this.addcity.insertToSubject(res);
           this.successMessage = true;
           this.message = res.msg;
           setTimeout(() => this.successMessage = false, 3000);
@@ -32,10 +32,11 @@ constructor(private router: Router, private route: ActivatedRoute, private addci
           this.message = res.msg;
           setTimeout(() => this.errorMessage = false, 3000);
         }
+        document.forms['addCityForm'].reset();
         this.city.length = 0;
       }, err => {
         console.error(err);
-      })
+      });
   }
 
   title = 'app';

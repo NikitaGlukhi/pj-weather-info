@@ -1,5 +1,5 @@
 <p class="h5" align="right">Today is {{today | date:'fullDate'}}</p>
-<div *ngIf="router.url === '/main-page'" class="current">
+<div *ngIf="router.url === '/main-page'" class="current" style="margin-top: 50px">
   <div *ngFor="let weather of weathers1?.weather">
     <h1 style="text-align: center">Current weather in {{weathers1?.name}}, {{weathers1?.sys?.country}}</h1>
     <h2 style="text-align: center"><img src="http://openweathermap.org/img/w/{{weather?.icon}}.png">{{current_temp}} &#176;С</h2>

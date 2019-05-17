@@ -17,10 +17,10 @@
   </div>
   </div>
 </nav>
-<div [hidden]="!successMessage" class="alert alert-success" role="alert" style="text-align: center">
+<div [hidden]="!successMessage" class="alert alert-success text-center" role="alert" style="width: 550px; position: fixed; left: 36%; right: 35.5%">
   <h4>{{ message }}</h4>
 </div>
-<div [hidden]="!errorMessage" class="alert alert-danger" role="alert" style="text-align: center">
+<div [hidden]="!errorMessage" class="alert alert-danger text-center" role="alert" style="width: 550px; position: fixed; left: 36%; right: 35.5%">
   <h4>{{ message }}</h4>
 </div>
 <router-outlet></router-outlet>
