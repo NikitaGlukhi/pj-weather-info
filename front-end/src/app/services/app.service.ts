@@ -3,15 +3,33 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import * as moment from 'moment';
 
 const url = environment.url;
+
+const dates = [
+  moment(Date.now()).format('YYYY-MM-DD'),
+  moment(Date.now()).add(1, 'days').format('YYYY-MM-DD'),
+  moment(Date.now()).add(2, 'days').format('YYYY-MM-DD'),
+  moment(Date.now()).add(3, 'days').format('YYYY-MM-DD'),
+  moment(Date.now()).add(4, 'days').format('YYYY-MM-DD')
+];
 
 @Injectable()
 export class AppService {
 
   private weatherSubject = new BehaviorSubject([]);
+  private weatherByCitySubject = new BehaviorSubject([]);
+  private arrayOfWeather: any = [];
 
   constructor(private http: HttpClient) {
+  }
+
+  public groupByDate(data) {
+    dates.forEach(date => {
+      this.arrayOfWeather.push(data.result.list.filter(item => item.dt_txt.indexOf(date, 0) >= 0));
+    });
+    this.weatherSubject.next(this.arrayOfWeather);
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -26,7 +44,7 @@ export class AppService {
   }
 
   public insertToSubject(subject: any) {
-    this.weatherSubject.next(subject);
+    this.weatherByCitySubject.next(subject);
   }
 
   public getCurrent(data: { lat: number, lng: number }) {
@@ -50,7 +68,8 @@ export class AppService {
   public getForecast() {
     this.http.get(`${url}/current-position/get-weather-by-city`)
       .subscribe((res: any) => {
-        this.weatherSubject.next(res);
+        this.groupByDate(res);
+        this.weatherByCitySubject.next(res);
       }, err => {
         console.log(err);
       });
@@ -64,6 +83,10 @@ export class AppService {
   }
 
   get subject() {
+    return this.weatherByCitySubject;
+  }
+
+  get weather() {
     return this.weatherSubject;
   }
 }

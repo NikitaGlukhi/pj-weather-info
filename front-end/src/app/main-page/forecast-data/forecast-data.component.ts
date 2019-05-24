@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../services/app.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {BehaviorSubject} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-forecast-data',
   templateUrl: './forecast-data.component.html',
   styleUrls: ['./forecast-data.component.css']
 })
+
 export class ForecastDataComponent implements OnInit {
-  weathers: any = {};
+  weathers: BehaviorSubject<any>;
   weatherData: BehaviorSubject<any>;
+  myInterval = -1;
+  showIndicator = false;
 
   formGroup: FormGroup;
 
-  constructor(private weather: AppService, private router: Router, private route: ActivatedRoute) {
+  constructor(private weather: AppService) {
+    this.weathers = this.weather.weather;
     this.weatherData = this.weather.subject;
   }
 
@@ -30,3 +33,4 @@ export class ForecastDataComponent implements OnInit {
     this.weather.getForecast();
   }
 }
+
