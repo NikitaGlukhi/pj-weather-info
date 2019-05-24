@@ -32,41 +32,45 @@
   </div>
 </div>
 
-<div *ngIf="router.url === '/main-page'" class="forecast">
-  <div>
-      <h1 style="text-align: center">Forecast weather in {{weathers2?.city?.name}}, {{weathers2?.city?.country}}</h1>
-    <div class="container">
-    <table class="table table-bordered" style="text-align: center">
-        <thead>
-          <tr>
-            <th>Day</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Cloudiness</th>
-            <th>Clouds</th>
-            <th>Temperature</th>
-            <th>Wind</th>
-            <th>Humidity</th>
-            <th>Pressure</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let weather1 of weathers2?.list">
-          <tr>
-            <td>{{weather1?.dt_txt | date: 'MMMM, d'}}</td>
-            <td>{{weather1?.dt_txt | date: 'HH:mm'}}</td>
-            <td><img src="http://openweathermap.org/img/w/{{weather1?.weather[0].icon}}.png"></td>
-            <td>{{weather1?.weather[0].description}}</td>
-            <td>{{weather1?.clouds?.all}} %</td>
-            <td>{{weather1?.main?.temp_max}} &#176;С</td>
-            <td>{{weather1?.wind?.speed}} m/s</td>
-            <td>{{weather1?.main?.humidity}} %</td>
-            <td>{{weather1?.main?.pressure}} hpa</td>
-          </tr>
-        </tbody>
-      </table>
+<carousel [interval]="myInterval" [showIndicators]="showIndicator">
+  <slide *ngFor="let days of array">
+    <div class="text-center py-5 text-dark">
+      <div *ngIf="router.url === '/main-page'" class="forecast">
+        <h1 style="text-align: center">Forecast weather in {{weathers2?.city?.name}}, {{weathers2?.city?.country}} on {{ days[0].dt_txt | date: 'MMMM d, y' }}</h1>
+        <div class="container">
+          <table class="table table-bordered" style="text-align: center">
+            <thead>
+            <tr>
+              <th>Day</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Cloudiness</th>
+              <th>Clouds</th>
+              <th>Temperature</th>
+              <th>Wind</th>
+              <th>Humidity</th>
+              <th>Pressure</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let day of days">
+            <tr>
+              <td>{{day?.dt_txt | date: 'MMMM, d'}}</td>
+              <td>{{day?.dt_txt | date: 'HH:mm'}}</td>
+              <td><img src="http://openweathermap.org/img/w/{{day?.weather[0].icon}}.png"></td>
+              <td>{{day?.weather[0].description}}</td>
+              <td>{{day?.clouds?.all}} %</td>
+              <td>{{day?.main?.temp_max}} &#176;С</td>
+              <td>{{day?.wind?.speed}} m/s</td>
+              <td>{{day?.main?.humidity}} %</td>
+              <td>{{day?.main?.pressure}} hpa</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    </div>
-</div>
+  </slide>
+</carousel>
 <router-outlet></router-outlet>
 
 

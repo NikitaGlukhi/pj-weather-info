@@ -1,36 +1,41 @@
-<div *ngIf="(weatherData | async)?.length !== 0" style="margin-top: 70px">
-  <div class="container">
-  <table class="table table-light table-bordered table-position-1">
-    <thead>
-      <tr>
-          <th>City</th>
-          <th>Day</th>
-          <th>Time</th>
-          <th>Status</th>
-          <th>Clouds</th>
-          <th>Cloudiness</th>
-          <th>Min temperature</th>
-          <th>Max temperature</th>
-          <th>Wind</th>
-          <th>Humidity</th>
-          <th>Pressure</th>
-      </tr>
-    </thead>
-    <tbody *ngFor="let weatherinfo of (weatherData | async)?.result?.list">
-      <tr>
-        <td>{{(weatherData | async)?.result?.city?.name}}, {{(weatherData | async)?.result?.city?.country}}</td>
-        <td>{{weatherinfo?.dt_txt | date: 'MMMM dd'}}</td>
-        <td>{{weatherinfo?.dt_txt | date: 'HH:mm'}}</td>
-        <td><img src="http://openweathermap.org/img/w/{{weatherinfo?.weather[0].icon}}.png"></td>
-        <td>{{weatherinfo?.clouds?.all}} %</td>
-        <td>{{weatherinfo?.weather[0].description}}</td>
-        <td>{{weatherinfo?.main?.temp_min}} &#176;С</td>
-        <td>{{weatherinfo?.main?.temp_max}} &#176;С</td>
-        <td>{{weatherinfo?.wind?.speed}} m/s</td>
-        <td>{{weatherinfo?.main?.humidity}} %</td>
-        <td>{{weatherinfo?.main?.pressure}} hpa</td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
+<div *ngIf="(weathers | async)?.length !== 0">
+  <carousel [interval]="myInterval" [showIndicators]="showIndicator">
+    <slide *ngFor="let days of (weathers | async)">
+      <div class="text-center py-4 text-dark">
+        <h1>Weather forecast in {{(weatherData | async)?.result?.city?.name}}, {{(weatherData | async)?.result?.city?.country}} on {{ days[0].dt_txt | date: 'MMMM d, y' }}</h1>
+        <div class="container">
+          <table class="table table-light table-bordered table-position-1">
+            <thead>
+            <tr>
+              <th>City</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Clouds</th>
+              <th>Cloudiness</th>
+              <th>Min temperature</th>
+              <th>Max temperature</th>
+              <th>Wind</th>
+              <th>Humidity</th>
+              <th>Pressure</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let day of days">
+            <tr>
+              <td>{{(weatherData | async)?.result?.city?.name}}, {{(weatherData | async)?.result?.city?.country}}</td>
+              <td>{{day?.dt_txt | date: 'HH:mm'}}</td>
+              <td><img alt src="http://openweathermap.org/img/w/{{day?.weather[0].icon}}.png"></td>
+              <td>{{day?.clouds?.all}} %</td>
+              <td>{{day?.weather[0].description}}</td>
+              <td>{{day?.main?.temp_min}} &#176;С</td>
+              <td>{{day?.main?.temp_max}} &#176;С</td>
+              <td>{{day?.wind?.speed}} m/s</td>
+              <td>{{day?.main?.humidity}} %</td>
+              <td>{{day?.main?.pressure}} hpa</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </slide>
+  </carousel>
 </div>

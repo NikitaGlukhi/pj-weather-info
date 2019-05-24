@@ -5,3 +5,11 @@ img {
 td:first-letter {
     text-transform: capitalize;
 }
+
+.carousel-indicators-dark li {
+  background-color: #fff;
+  background-color: rgba(70, 70, 70, 0.25);
+}
+.carousel-indicators-dark .active {
+  background-color: #444;
+}
