@@ -6,7 +6,19 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-forecast-data',
   templateUrl: './forecast-data.component.html',
-  styleUrls: ['./forecast-data.component.css']
+  styleUrls: ['./forecast-data.component.css'],
+  styles: [`
+    ::ng-deep .carousel-control-prev, ::ng-deep .carousel-control-next {
+      background-color: white;
+    }
+    ::ng-deep .carousel .carousel-control-prev-icon, ::ng-deep .carousel .carousel-control-next-icon {
+      background-color: #000;
+      width: 50px;
+      height: 50px;
+      background-size: 41%;
+      border-radius: 50%;
+    }
+  `]
 })
 
 export class ForecastDataComponent implements OnInit {
