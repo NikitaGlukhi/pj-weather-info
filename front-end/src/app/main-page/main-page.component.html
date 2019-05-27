@@ -32,10 +32,9 @@
   </div>
 </div>
 
-<carousel [interval]="myInterval" [showIndicators]="showIndicator">
+<carousel [interval]="myInterval" [showIndicators]="showIndicator" *ngIf="router.url === '/main-page'" class="forecast">
   <slide *ngFor="let days of array">
     <div class="text-center py-5 text-dark">
-      <div *ngIf="router.url === '/main-page'" class="forecast">
         <h1 style="text-align: center">Forecast weather in {{weathers2?.city?.name}}, {{weathers2?.city?.country}} on {{ days[0].dt_txt | date: 'MMMM d, y' }}</h1>
         <div class="container">
           <table class="table table-bordered" style="text-align: center">
@@ -68,7 +67,6 @@
           </table>
         </div>
       </div>
-    </div>
   </slide>
 </carousel>
 <router-outlet></router-outlet>
