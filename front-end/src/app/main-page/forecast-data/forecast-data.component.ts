@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-forecast-data',
   templateUrl: './forecast-data.component.html',
-  styleUrls: ['./forecast-data.component.css']
+  styleUrls: ['./forecast-data.component.css'],
 })
 
 export class ForecastDataComponent implements OnInit {
