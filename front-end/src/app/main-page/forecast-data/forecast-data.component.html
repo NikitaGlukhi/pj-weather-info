@@ -1,4 +1,4 @@
-<div *ngIf="(weathers | async)?.length !== 0">
+<div>
   <carousel [interval]="myInterval" [showIndicators]="showIndicator">
     <slide *ngFor="let days of (weathers | async)">
       <div class="text-center py-4 text-dark">
