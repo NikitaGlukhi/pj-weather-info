@@ -40,7 +40,7 @@
     "morgan": "1.9.1",
     "ng-bootstrap-form-validation": "2.1.0",
     "ngx-bootstrap": "3.3.0",
-    "pug": "2.0.0-beta11",
+    "pug": "3.0.1",
     "request": "2.88.0",
     "rxjs": "6.0.0",
     "serve-favicon": "2.5.0",
